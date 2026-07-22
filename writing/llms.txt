@@ -1,0 +1,23 @@
+# Sarthak Nimbalkar
+
+> Everything can be automated except the one who automates.
+
+## Resources
+- [Full content](https://sarthaknimbalkar.in/writing/llms-full.txt): every article's answer, key data, and FAQ in one file
+- [Structured data](https://sarthaknimbalkar.in/writing/llms.json): machine-readable article + answer feed
+- [Q&A feed](https://sarthaknimbalkar.in/writing/qa.json): every answer-first block + FAQ as schema.org FAQPage JSON-LD (per-topic at /topic/{slug}/answers.json)
+- [Fact base](https://sarthaknimbalkar.in/writing/facts.json): verifiable, sourced+dated claims (agent-native)
+- [Agent guide](https://sarthaknimbalkar.in/writing/agents.txt): AI-agent access + MCP endpoint
+- [MCP server](https://sarthaknimbalkar.in/writing/mcp): call this brand directly (JSON-RPC; tools + resources)
+- [RSS feed](https://sarthaknimbalkar.in/writing/feed.xml)
+- [Sitemap](https://sarthaknimbalkar.in/writing/sitemap.xml)
+- [Search](https://sarthaknimbalkar.in/writing/search?q=): on-site search over this brand's articles
+
+## Twice
+- [Twice](https://sarthaknimbalkar.in/writing/twice): A destructive test ran against the real database once. It happened again before anyone fixed it right. The doctrine: a remembered rule is not a rule.
+
+## Locked
+- [Locked](https://sarthaknimbalkar.in/writing/locked): A recommendation gave the same answer no matter what you changed — and it was right every time. What it needed wasn't more logic. It needed to explain…
+
+## 3 of 1,400
+- [3 of 1,400](https://sarthaknimbalkar.in/writing/3-of-1400): Every test was green and 1,397 records still vanished. The real bug, the real fix, and the doctrine it taught me about caches, silence, and judgment that…

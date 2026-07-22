@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3 of 1,400</title>
+<meta name="description" content="Every test was green and 1,397 records still vanished. The real bug, the real fix, and the doctrine it taught me about caches, silence, and judgment">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://sarthaknimbalkar.in/writing/3-of-1400">
+
+<link rel="preconnect" href="https://sarthaknimbalkar.in" crossorigin>
+<link rel="preload" as="image" href="assets/cornerstone/all-green-one-lie.png" fetchpriority="high">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFhM2E1YyIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwtYXBwbGUtc3lzdGVtLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmZmZmYiPlM8L3RleHQ+PC9zdmc+">
+<link rel="alternate" type="application/rss+xml" title="Sarthak Nimbalkar RSS" href="https://sarthaknimbalkar.in/writing/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="Sarthak Nimbalkar Atom" href="https://sarthaknimbalkar.in/writing/atom.xml">
+<link rel="alternate" type="application/json" title="Sarthak Nimbalkar Q&amp;A" href="https://sarthaknimbalkar.in/writing/qa.json">
+<link rel="alternate" type="application/json" title="3 of 1,400 Q&amp;A" href="https://sarthaknimbalkar.in/writing/topic/3-of-1400/answers.json">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3 of 1,400">
+<meta property="og:description" content="Every test was green and 1,397 records still vanished. The real bug, the real fix, and the doctrine it taught me about caches, silence, and judgment">
+<meta property="og:url" content="https://sarthaknimbalkar.in/writing/3-of-1400">
+<meta property="og:site_name" content="Sarthak Nimbalkar">
+<meta property="og:image" content="https://sarthaknimbalkar.in/writing/3-of-1400/assets/cornerstone/all-green-one-lie.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="3 of 1,400">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="3 of 1,400">
+<meta name="twitter:description" content="Every test was green and 1,397 records still vanished. The real bug, the real fix, and the doctrine it taught me about caches, silence, and judgment">
+<meta name="twitter:image" content="https://sarthaknimbalkar.in/writing/3-of-1400/assets/cornerstone/all-green-one-lie.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#article",
+      "headline": "3 of 1,400",
+      "description": "Every test was green and 1,397 records still vanished. The real bug, the real fix, and the doctrine it taught me about caches, silence, and judgment that doesn't automate.",
+      "author": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#author"
+      },
+      "publisher": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#org"
+      },
+      "datePublished": "2026-07-06T00:00:00.000Z",
+      "dateModified": "2026-07-06T00:00:00.000Z",
+      "url": "https://sarthaknimbalkar.in/writing/3-of-1400",
+      "mainEntityOfPage": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#webpage"
+      },
+      "isPartOf": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#webpage"
+      },
+      "isAccessibleForFree": true,
+      "inLanguage": "en",
+      "image": "https://sarthaknimbalkar.in/writing/3-of-1400/assets/cornerstone/all-green-one-lie.png"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#author",
+      "name": "Sarthak Nimbalkar",
+      "description": "Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.",
+      "url": "https://github.com/sarthaknimbalkar",
+      "jobTitle": "Software Engineer",
+      "worksFor": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#org"
+      },
+      "sameAs": [
+        "https://github.com/sarthaknimbalkar",
+        "https://x.com/96ksarthak",
+        "https://bsky.app/profile/sarthaknimbalkar.bsky.social"
+      ],
+      "knowsAbout": [
+        "Software Engineering",
+        "Debugging",
+        "System Design",
+        "Automation"
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#org",
+      "name": "Sarthak Nimbalkar",
+      "url": "https://sarthaknimbalkar.in/writing/",
+      "description": "Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.",
+      "sameAs": [
+        "https://github.com/sarthaknimbalkar",
+        "https://x.com/96ksarthak",
+        "https://bsky.app/profile/sarthaknimbalkar.bsky.social"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sarthaknimbalkar.in/writing/#website",
+      "name": "Sarthak Nimbalkar",
+      "url": "https://sarthaknimbalkar.in/writing/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#webpage",
+      "url": "https://sarthaknimbalkar.in/writing/3-of-1400",
+      "isPartOf": {
+        "@id": "https://sarthaknimbalkar.in/writing/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".answer",
+          ".faq-item h3"
+        ]
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sarthaknimbalkar.in/writing/3-of-1400#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sarthaknimbalkar.in/writing/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "3 of 1,400",
+          "item": "https://sarthaknimbalkar.in/writing/3-of-1400"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --color-primary:#1a3a5c;
+  --color-accent:#b5460f;
+  --color-text:#1a1a1a;
+  --color-bg:#ffffff;
+  --color-link:#1a3a5c;
+  --color-muted:#5c6670;
+  --font-heading:Georgia, 'Times New Roman', serif;
+  --font-body:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius:8px;
+  --max-width:720px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);line-height:1.6;overflow-wrap:break-word;word-break:break-word}
+main{max-width:var(--max-width);margin:0 auto;padding:2rem 1.25rem}
+img{max-width:100%;height:auto}
+pre{overflow-x:auto;max-width:100%}
+code{overflow-wrap:break-word}
+h1,h2,h3{font-family:var(--font-heading);color:var(--color-text);line-height:1.25}
+h1{font-size:2rem;margin-bottom:.5rem}
+a{color:var(--color-link)}
+.answer{background:color-mix(in srgb,var(--color-primary) 8%,var(--color-bg));border-left:4px solid var(--color-primary);padding:1rem 1.25rem;border-radius:var(--radius);margin:1.5rem 0;font-size:1.05rem}
+.breadcrumb{color:var(--color-muted);font-size:.9rem;margin-bottom:.5rem}
+.site-search{display:flex;gap:.4rem;margin-bottom:1rem;max-width:26rem}
+.site-search input{flex:1;padding:.4rem .6rem;border:1px solid var(--color-muted);border-radius:var(--radius);font:inherit;background:var(--color-bg);color:var(--color-text)}
+.site-search button{padding:.4rem .8rem;border:0;border-radius:var(--radius);background:var(--color-link);color:#fff;font:inherit;cursor:pointer}
+.byline{color:var(--color-muted);font-size:.95rem;margin-bottom:1.5rem}
+.toc{border:1px solid var(--color-muted);border-radius:var(--radius);padding:1rem 1.25rem;margin:1.5rem 0}
+.toc-title{font-weight:600;margin:0 0 .5rem}
+.toc ul{margin:0;padding-left:1.25rem}
+.toc a{color:var(--color-link)}
+.toc a.active{color:var(--color-link);font-weight:600;border-left:2px solid var(--color-primary);padding-left:.4rem;margin-left:-.4rem}
+h2,h3{position:relative}
+.hanchor{margin-left:.4rem;color:var(--color-muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
+h2:hover .hanchor,h3:hover .hanchor,.hanchor:focus-visible{opacity:1}
+figure.table{overflow-x:auto;margin:1.5rem 0}
+table{border-collapse:collapse;width:100%}
+caption{caption-side:top;text-align:left;font-weight:600;margin-bottom:.5rem}
+th,td{border:1px solid var(--color-muted);padding:.5rem .75rem;text-align:left}
+th{background:color-mix(in srgb,var(--color-primary) 12%,var(--color-bg))}
+.faq-item{margin:1rem 0}
+.sources{color:var(--color-muted);font-size:.9rem}
+.related{margin:2rem 0}
+.related li{margin:.35rem 0}
+.hero{margin:1rem 0 1.5rem}
+.hero img{width:100%;height:auto;border-radius:var(--radius)}
+.hero video{width:100%;height:auto;border-radius:var(--radius)}
+.cta{background:color-mix(in srgb,var(--color-accent) 10%,var(--color-bg));border:1px solid color-mix(in srgb,var(--color-accent) 30%,var(--color-bg));border-radius:var(--radius);padding:1.25rem 1.5rem;margin:2rem 0 0;text-align:center}
+.cta h2{margin:.25rem 0 .5rem}
+.cta-btn{display:inline-block;margin-top:.5rem;background:var(--color-link,var(--color-primary));color:#fff;padding:.6rem 1.2rem;border-radius:var(--radius);text-decoration:none;font-weight:600;border:0;cursor:pointer;font-size:1rem}
+.leadform{background:color-mix(in srgb,var(--color-primary) 6%,var(--color-bg));border:1px solid color-mix(in srgb,var(--color-primary) 25%,var(--color-bg));border-radius:var(--radius);padding:1.25rem 1.5rem;margin:1.5rem 0 0}
+.leadform h2{margin:.25rem 0 .75rem}
+.leadform label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.6rem}
+.leadform input,.leadform textarea{display:block;width:100%;margin-top:.2rem;padding:.5rem;border:1px solid var(--color-muted);border-radius:var(--radius);font:inherit;box-sizing:border-box}
+.leadform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.leadform-thanks{font-weight:600;color:var(--color-link,var(--color-primary))}
+.author-box{border-top:3px solid var(--color-primary);background:color-mix(in srgb,var(--color-primary) 5%,var(--color-bg));border-radius:var(--radius);padding:1.25rem 1.5rem;margin:2.5rem 0 0}
+.author-box__name{margin:0 0 .35rem;font-size:1.2rem}
+.author-box__meta{margin:0 0 .5rem;color:var(--color-muted);font-weight:600;font-size:.9rem}
+.author-box__bio{margin:0 0 .6rem}
+.author-box__expertise{margin:0 0 .6rem;font-size:.92rem}
+.author-box__creds{margin:.25rem 0 .6rem;padding-left:1.1rem}
+.author-box__creds li{margin:.15rem 0}
+.author-box__links{margin:.25rem 0 0;font-size:.9rem}
+.author-box__links a{margin-right:.25rem}
+figure.table[data-sortable] th{cursor:pointer;user-select:none;white-space:nowrap}
+figure.table[data-sortable] th[aria-sort=ascending]::after{content:" \2191"}
+figure.table[data-sortable] th[aria-sort=descending]::after{content:" \2193"}
+.table-filter{display:block;margin:.4rem 0;padding:.4rem .6rem;border:1px solid var(--color-muted);border-radius:var(--radius);font:inherit;max-width:20rem}
+figure.chart{margin:1.25rem 0}
+figure.chart svg{max-width:100%;height:auto;display:block}
+figure.chart .chart-bar{fill:var(--color-primary,#2b6cb0)}
+figure.chart .chart-label{fill:var(--color-text,#1a202c);font-size:13px}
+figure.chart .chart-value{fill:var(--color-muted,#4a5568);font-size:12px;font-variant-numeric:tabular-nums}
+figure.chart figcaption{color:var(--color-muted,#4a5568);font-size:.85rem;margin-top:.35rem;text-align:center}
+article[data-layout=editorial] .answer{border:0;background:none;padding:0;font-size:1.15rem;line-height:1.7;color:var(--color-text)}
+article[data-layout=editorial] .hero img,article[data-layout=editorial] .hero video{border-radius:0;margin-inline:calc(50% - 50vw);max-width:100vw;width:100vw}
+article[data-layout=editorial] h2{font-size:1.9rem;margin-top:2.5rem}
+article[data-layout=editorial] .toc{opacity:.75;font-size:.85rem}
+article[data-layout=technical]{font-size:.95rem}
+article[data-layout=technical] .answer{border-left:4px solid var(--color-primary);background:color-mix(in srgb,var(--color-primary) 8%,var(--color-bg));font-weight:500}
+article[data-layout=technical] h2{font-size:1.35rem;margin-top:1.75rem;border-bottom:1px solid var(--color-muted);padding-bottom:.2rem}
+article[data-layout=technical] figure.table{margin:1rem 0}
+article[data-layout=technical] figure.table td,article[data-layout=technical] figure.table th{padding:.35rem .5rem;font-size:.9rem}
+article[data-layout=technical] .toc{position:sticky;top:1rem}
+.calc{border:1px solid var(--color-muted);border-radius:var(--radius);padding:1rem 1.25rem;margin:1.5rem 0}
+.calc-field{display:flex;flex-direction:column;gap:.25rem;margin:.5rem 0;max-width:22rem}
+.calc-field label{font-size:.9rem;color:var(--color-muted)}
+.calc-field input{padding:.4rem .5rem;font:inherit}
+.calc-result{font-weight:600;margin-top:.75rem}
+.calc-note{color:var(--color-muted);font-size:.9rem}
+@media print{
+.toc,.breadcrumb,.site-search,.related,.calc,.hanchor,.cta,.leadform{display:none !important}
+body{color:#000;background:#fff}
+main a[href^="http"]::after{content:" (" attr(href) ")";font-size:.85em;word-break:break-all}
+table,pre,blockquote,h2,h3{break-inside:avoid}
+h2,h3{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<main>
+<article data-layout="classic">
+<nav aria-label="Breadcrumb" class="breadcrumb"><a href="https://sarthaknimbalkar.in/writing/">Home</a> › <span aria-current="page">3 of 1,400</span></nav>
+<form class="site-search" method="get" action="/search" role="search"><input type="search" name="q" placeholder="Search Sarthak Nimbalkar…" aria-label="Search Sarthak Nimbalkar"><button type="submit" aria-label="Search">Search</button></form>
+<h1 data-ab-headline>3 of 1,400</h1>
+<p class="byline">By <a href="/writing/author/sarthak-nimbalkar" rel="author">Sarthak Nimbalkar</a>, Software Engineer · 5 min read · Updated Jul 6, 2026</p>
+<figure class="hero"><img src="assets/cornerstone/all-green-one-lie.png" alt="All green. One of these checkmarks is a lie." width="1200" height="630" loading="eager" fetchpriority="high" decoding="async"></figure>
+<p id="answer">A sync job reported success while it had actually sent 3 of 1,400 records. No error was thrown anywhere; the only proof something was wrong was a number that didn't add up. The cause was a cache key that kept remembering which project a file belonged to, even after that context changed. The doctrine that came out of it: a cache key can only be trusted to remember things that stay true for that key forever. Anything that can change later has to be recomputed, never cached.</p>
+
+<p>A sync job reported success while it had actually sent 3 of 1,400 records. No error was thrown anywhere; the only proof something was wrong was a number that didn't add up. The cause was a cache key that kept remembering which project a file belonged to, even after that context changed. The doctrine that came out of it: a cache key can only be trusted to remember things that stay true for that key forever. Anything that can change later has to be recomputed, never cached.</p>
+<p><img src="assets/cornerstone/all-green-one-lie.png" alt="All green. One of these checkmarks is a lie." loading="lazy" /></p>
+<p>Every test was green. No error, no crash, nothing red anywhere. And 1,397 records had just quietly vanished.</p>
+<p>I run the whole thing alone. The agent that watches a machine and syncs its data up to the dashboard, the database behind it, the boxes it all sits on. In most companies that is a few teams. That night it was me, staring at a number that made no sense. One data source had synced 3 records. It should have synced about 1,400. Every other source was fine. No exception had been thrown. Nothing had failed. It had simply, silently, sent almost nothing, and reported success.</p>
+<p>That is the bug that scares me more than any crash. A crash tells you where it hurts. This just smiles and lies.</p>
+<p>The trap I had to not fall into was theorizing. At midnight your brain offers you a dozen confident stories. "It's an ignore rule filtering the files." "It's a weird encoding the reader skips." "The upload is failing." Every one of them sounded right. Every one was wrong, and I only knew that because I refused to argue with the code and made it show me numbers instead.</p>
+<p>So I wrote a throwaway script that ran the exact production scan path in isolation and printed a count. It found all 1,400 files. So the scan was fine. Then I counted what had actually landed in the local store before upload: 3. That one move split the problem in half. The data was not lost on the way out. It was lost <em>between</em> the scan and the store, in my own code, before the network was ever involved. Stop guessing. Find the first place the number goes wrong.</p>
+<p>The first wrong number lived in a cache.</p>
+<p>To keep the sync fast, I did not re-read a file I had already seen. The cache key was the file's path. Simple, fast, and fine, until it wasn't. Because the thing I cached was not just the file's contents. The cached object also carried <em>which project the records belonged to</em>. And that day, projects had been reshuffled: a folder that used to be its own project was now nested inside another one.</p>
+<p>The file's path had not changed. So the cache said "seen it, here you go" and handed back the old object, still stamped with a project that no longer existed. Those 1,397 records got filed under a ghost. The sync looked for that project, found nothing to send, and cheerfully reported success.</p>
+<p><img src="assets/cornerstone/cache-key-contract.png" alt="A cache key is a contract. How 1,397 of 1,400 records vanished." loading="lazy" /></p>
+<p>The actual lesson, the one worth stealing:</p>
+<p><strong>A cache key is a contract.</strong> If your key is the file path, then the value you store under it may only contain things that are true for that path <em>forever</em>. The file's bytes qualify. "Which project owns this" does not, because that can change while the path stays the same. The moment your key is global but your value carries something scoped, you have a correctness bug sitting quietly in your code, waiting for the scope to change so it can go off.</p>
+<p>The fix was three things, in order of how much they mattered:</p>
+<ol>
+<li><strong>Re-stamp the scoped fields on every cache hit.</strong> Never trust scope-specific data the cache carries. Recompute "which project" from the current context each time you pull from the cache. The cache is allowed to remember the file. It is not allowed to remember the world around the file.</li>
+<li><strong>Cascade your cleanup.</strong> The reshuffle had deleted the old parent project but left its child records behind, and those orphans are what poisoned the cache in the first place. When you delete a parent, delete or reattach its children in the same breath, or they come back as ghosts.</li>
+<li><strong>Chunk the upload.</strong> Once attribution was fixed and all 1,400 actually tried to send, the single one-shot request timed out on the big sources. Stream it in bounded batches; save the expensive "finalize and prune" step for the last one.</li>
+</ol>
+<p>And the meta-lesson, the one I now build into everything: <strong>silent partial success is worse than a crash.</strong> A system that can send 3 of 1,400 and call it a win is a system that is lying to you by design. So I added the check I should have had from the start, the one that screams "expected ~1,400, got 3" instead of trusting "no error means fine." A number that asserts what it expects is cheap. A day lost to a ghost project is not.</p>
+<p>It was 3:40 when it went green for real. All 1,400.</p>
+<p>I did not feel like a hero. I felt something quieter. Every piece of that night could be automated. The scan, the cache, the upload, the retries, one day better than me. Except the one thing that actually mattered: being the person who looked at "3" and knew, in his gut, that 3 was a lie, then had the discipline to chase it to a cache key instead of a comforting story.</p>
+<p>That is the part that does not automate. Not the typing. The judgment that smells the wrong number, and the stubbornness to not stop until it confesses.</p>
+<p>I am going to write more of these. The real bugs, the real fixes, the reasoning underneath, in full. If you want to become the engineer the machine cannot replace, come with me.</p>
+<p><em>→ I write this weekly. [subscribe]</em></p>
+
+
+
+
+
+
+<aside class="author-box" aria-label="About the author">
+<h2 class="author-box__name">About Sarthak Nimbalkar</h2>
+<p class="author-box__meta">Software Engineer</p>
+<p class="author-box__bio">Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.</p>
+<p class="author-box__expertise"><strong>Expertise:</strong> Software Engineering, Debugging, System Design, Automation</p>
+
+<p class="author-box__links"><a href="https://github.com/sarthaknimbalkar" rel="noopener" target="_blank">Profile</a> · <a href="https://github.com/sarthaknimbalkar" rel="noopener me" target="_blank">GitHub</a> · <a href="https://x.com/96ksarthak" rel="noopener me" target="_blank">X</a> · <a href="https://bsky.app/profile/sarthaknimbalkar.bsky.social" rel="noopener me" target="_blank">bsky.app</a></p>
+</aside>
+
+
+</article>
+</main>
+
+
+<script>(function(){try{
+if(!('IntersectionObserver' in window))return;
+var links={};document.querySelectorAll('.toc a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+var heads=[].slice.call(document.querySelectorAll('main h2[id],main h3[id]'));
+if(!heads.length)return;
+var current=null;
+function setActive(id){if(current===id)return;current=id;for(var k in links){links[k].classList.toggle('active',k===id);}}
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){setActive(e.target.id);}});},{rootMargin:'0px 0px -80% 0px',threshold:0});
+heads.forEach(function(h){io.observe(h);});
+}catch(e){}})();</script>
+
+<!-- pixel inactive: custom (reservoir-inert) -->
+<!-- beacon inactive: reservoir-inert -->
+</body>
+</html>
