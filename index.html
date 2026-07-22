@@ -6,36 +6,424 @@
 <title>Sarthak Nimbalkar</title>
 <meta name="description" content="Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.">
 <link rel="canonical" href="https://sarthaknimbalkar.in/">
-<link rel="stylesheet" href="/style.css">
 <link rel="alternate" type="application/rss+xml" title="Sarthak Nimbalkar" href="/feed.xml">
+<style>
+  :root{
+    /* molten: true black ground, heat as the only color story */
+    --ink:#080605;
+    --fg:#f3ead9;
+    --dim:#96897a;
+    --faint:#57503f;
+    --hair:#221c15;
+    --accent:#ffa028;      /* hot amber: links, the held phrase */
+    --ember:#ff5330;       /* glowing coal: emphasis words */
+    --spark:#ffd76a;       /* white-hot: peaks only */
+    --heat1:#d9331f;       /* canvas heat ramp: slow…fast */
+    --heat2:#ff9022;
+    --heat3:#ffdd66;
+    --accent-dim:#ffa02824;
+    --sel:#ff53303a;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Mono",Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --ink:#f6eedd;--fg:#26190d;--dim:#7a6a52;--faint:#b3a483;--hair:#e2d5ba;
+      --accent:#c25e00;--ember:#c22c12;--spark:#a04d00;
+      --heat1:#a8321a;--heat2:#c96a0e;--heat3:#e09b00;
+      --accent-dim:#c25e001a;--sel:#c22c122e;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#080605;--fg:#f3ead9;--dim:#96897a;--faint:#57503f;--hair:#221c15;
+    --accent:#ffa028;--ember:#ff5330;--spark:#ffd76a;
+    --heat1:#d9331f;--heat2:#ff9022;--heat3:#ffdd66;
+    --accent-dim:#ffa02824;--sel:#ff53303a;
+  }
+  :root[data-theme="light"]{
+    --ink:#f6eedd;--fg:#26190d;--dim:#7a6a52;--faint:#b3a483;--hair:#e2d5ba;
+    --accent:#c25e00;--ember:#c22c12;--spark:#a04d00;
+    --heat1:#a8321a;--heat2:#c96a0e;--heat3:#e09b00;
+    --accent-dim:#c25e001a;--sel:#c22c122e;
+  }
 
+  *{box-sizing:border-box;}
+  ::selection{background:var(--sel);}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--ink);color:var(--fg);
+    font-family:var(--serif);line-height:1.6;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(90% 55% at 85% -10%, var(--accent-dim), transparent 65%),
+      radial-gradient(60% 40% at 0% 100%, var(--accent-dim), transparent 70%);
+    background-repeat:no-repeat;
+  }
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+
+  #field{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+  .page{
+    position:relative;z-index:1;
+    min-height:100dvh;display:flex;flex-direction:column;
+    max-width:66rem;margin:0 auto;
+    padding:clamp(1.5rem,4vw,2.6rem) clamp(1.4rem,5vw,4rem) clamp(1.4rem,4vw,2.4rem);
+  }
+
+  .mast{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:1rem 2rem;flex-wrap:wrap;
+    padding-bottom:1.2rem;border-bottom:1px solid var(--hair);
+  }
+  .mast .name{
+    font-weight:700;font-size:clamp(1.4rem,3.4vw,2rem);
+    letter-spacing:-.015em;line-height:1;
+  }
+  .mast .name .mark{color:var(--accent);}
+  .mast nav{display:flex;gap:1.35rem;flex-wrap:wrap;align-self:center;
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;}
+  .mast nav a{color:var(--dim);border-bottom:1px solid transparent;padding-bottom:2px;
+    transition:color .18s ease,border-color .18s ease;}
+  .mast nav a:hover,.mast nav a:focus-visible{color:var(--accent);border-color:var(--accent);}
+
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(3.5rem,12vh,8rem) 0;}
+  h1{
+    margin:0;font-weight:500;letter-spacing:-.02em;
+    font-size:clamp(2.7rem,8vw,5.8rem);line-height:1.04;
+    max-width:15ch;text-wrap:balance;
+  }
+  h1 .q{color:var(--dim);}
+  h1 .a{font-style:italic;font-weight:600;color:var(--accent);}
+  h1 .ch{transition:color .25s linear;}
+  .lede{
+    margin:2.3rem 0 0;max-width:44ch;
+    font-size:clamp(1.05rem,2.3vw,1.28rem);line-height:1.5;color:var(--dim);
+  }
+  .lede em{font-style:normal;color:var(--ember);font-weight:600;}
+  .base{
+    margin-top:2.8rem;font-family:var(--mono);font-size:.8rem;letter-spacing:.02em;
+    color:var(--faint);
+  }
+  .base a{color:var(--accent);border-bottom:1px solid var(--accent-dim);padding-bottom:1px;
+    transition:border-color .18s ease;}
+  .base a:hover,.base a:focus-visible{border-color:var(--accent);}
+
+  footer{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+    padding-top:1.2rem;border-top:1px solid var(--hair);
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--faint);
+  }
+  #readout{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  #readout b{color:var(--dim);font-weight:400;}
+
+  /* bespoke cursor */
+  #cur{position:fixed;left:0;top:0;z-index:50;pointer-events:none;
+    width:34px;height:34px;margin:-17px 0 0 -17px;opacity:0;
+    transition:opacity .3s ease;will-change:transform;}
+  #cur svg{width:100%;height:100%;display:block;overflow:visible;}
+  #cur .brk{stroke:var(--accent);stroke-width:1.4;fill:none;}
+  #dot{position:fixed;left:0;top:0;z-index:51;pointer-events:none;
+    width:4px;height:4px;margin:-2px 0 0 -2px;border-radius:50%;
+    background:var(--spark);opacity:0;transition:opacity .3s ease;}
+  body.cur-on{cursor:none;}
+  body.cur-on a,body.cur-on button{cursor:none;}
+
+  .rise{opacity:0;transform:translateY(12px);animation:rise .85s cubic-bezier(.2,.7,.2,1) forwards;}
+  .r1{animation-delay:.05s;}.r2{animation-delay:.18s;}.r3{animation-delay:.34s;}.r4{animation-delay:.48s;}.r5{animation-delay:.6s;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+  @media(prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none;}}
+</style>
 </head>
 <body>
 
-<h1>Sarthak Nimbalkar</h1>
-<p class="tagline">Everything can be automated except the one who automates.</p>
-<p class="desc">Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.</p>
-<nav class="links">
-  <a href="/writing/">writing</a>
-  <a href="https://sarthaktellstales.beehiiv.com/subscribe">subscribe</a>
-  <a href="https://github.com/sarthaknimbalkar">github</a>
-  <a href="https://x.com/96ksarthak">x</a>
-</nav>
-<h2>Writing</h2>
-<ul class="writing">
-  <li><a href="/writing/3-of-1400">3 of 1,400</a></li>
-  <li><a href="/writing/locked">Locked</a></li>
-  <li><a href="/writing/twice">Twice</a></li>
-</ul>
-<p class="desc"><a href="/writing/">All writing &rarr;</a></p>
+<canvas id="field" aria-hidden="true"></canvas>
 
-<footer>
-  <a href="/">Sarthak Nimbalkar</a> &middot;
-  <a href="/writing/">writing</a> &middot;
-  <a href="https://sarthaktellstales.beehiiv.com/subscribe">subscribe</a> &middot;
-  <a href="https://github.com/sarthaknimbalkar">github</a> &middot;
-  <a href="https://x.com/96ksarthak">x</a> &middot;
-  <a href="https://bsky.app/profile/sarthaknimbalkar.bsky.social">bluesky</a>
-</footer>
+<div class="page">
+  <header class="mast rise r1">
+    <span class="name">Sarthak Nimbalkar<span class="mark">.</span></span>
+    <nav>
+      <a href="/writing/">I write</a>
+      <a href="https://sarthaktellstales.beehiiv.com/subscribe">subscribe</a>
+      <a href="https://github.com/sarthaknimbalkar">github</a>
+      <a href="https://x.com/96ksarthak">x</a>
+      <a href="https://bsky.app/profile/sarthaknimbalkar.bsky.social">bluesky</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 id="thesis" class="rise r2" aria-label="Everything can be automated. Except the one who automates.">
+      <span class="q">Everything can be automated.</span><br>
+      <span class="line2">Except the one <span class="a">who automates.</span></span>
+    </h1>
+    <p class="lede rise r3">Field notes from real builds, for the engineer who intends to stay <em>irreplaceable.</em></p>
+    <p class="base rise r4">New writing reaches <a href="https://sarthaktellstales.beehiiv.com/subscribe">the newsletter</a> first.</p>
+  </main>
+
+  <footer class="rise r5">
+    <span>sarthaknimbalkar.in</span>
+    <span id="readout"><b>idle</b></span>
+  </footer>
+</div>
+
+<div id="cur" aria-hidden="true">
+  <svg viewBox="0 0 34 34">
+    <path class="brk" d="M4 11 V4 H11"/>
+    <path class="brk" d="M23 4 H30 V11"/>
+    <path class="brk" d="M30 23 V30 H23"/>
+    <path class="brk" d="M11 30 H4 V23"/>
+  </svg>
+</div>
+<div id="dot" aria-hidden="true"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine   = matchMedia("(pointer: fine)").matches;
+
+  /* ---------- themed colours, kept live ---------- */
+  function readVars(){
+    var s=getComputedStyle(document.documentElement);
+    function v(n,f){return (s.getPropertyValue(n).trim()||f);}
+    return {
+      accent:v("--accent","#ffa028"), ember:v("--ember","#ff5330"),
+      spark:v("--spark","#ffd76a"),  dim:v("--dim","#96897a"),
+      fg:v("--fg","#f3ead9"),
+      h1:v("--heat1","#d9331f"), h2:v("--heat2","#ff9022"), h3:v("--heat3","#ffdd66")
+    };
+  }
+  var pal=readVars();
+  function refresh(){ pal=readVars(); }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",refresh);
+  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+  function rgb(h){
+    h=h.replace("#","");
+    if(h.length===3)h=h.split("").map(function(c){return c+c;}).join("");
+    var n=parseInt(h,16);return [(n>>16)&255,(n>>8)&255,n&255];
+  }
+  function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  /* three-stop heat ramp: t 0..1 → heat1 → heat2 → heat3 */
+  function heat(t){
+    var c1=rgb(pal.h1),c2=rgb(pal.h2),c3=rgb(pal.h3);
+    var c = t<0.5 ? mix(c1,c2,t*2) : mix(c2,c3,(t-0.5)*2);
+    return c;
+  }
+  function paint(c,a){return "rgba("+(c[0]|0)+","+(c[1]|0)+","+(c[2]|0)+","+a.toFixed(3)+")";}
+
+  /* ---------- canvas: flow field with momentum + click sparks ---------- */
+  var cv=document.getElementById("field"), ctx=cv.getContext("2d");
+  var W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+  var mouse={x:-999,y:-999,active:false,vx:0,vy:0};
+  var parts=[],sparks=[];
+
+  function resize(){
+    W=innerWidth;H=innerHeight;
+    cv.width=W*DPR;cv.height=H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    var n=Math.min(170,Math.floor(W*H/11000));
+    parts.length=0;
+    for(var i=0;i<n;i++){
+      var x=Math.random()*W,y=Math.random()*H;
+      parts.push({x:x,y:y,px:x,py:y,vx:0,vy:0,
+        life:Math.random()*220,max:160+Math.random()*160,
+        sp:0.6+Math.random()*0.9, mass:0.6+Math.random()*0.9});
+    }
+  }
+
+  function angle(x,y,t){
+    return Math.PI*2*(
+      Math.sin(x*0.0016+t*0.00023)+
+      Math.cos(y*0.0015-t*0.00019)+
+      Math.sin((x+y)*0.0009+t*0.00014)
+    );
+  }
+
+  var DRAG=0.94, STEER=0.07, REPEL_R2=27000, GRAV=0.11;
+
+  function step(t){
+    ctx.clearRect(0,0,W,H);
+
+    /* drifting field: heat = its own speed */
+    var i,p;
+    for(i=0;i<parts.length;i++){
+      p=parts[i]; p.px=p.x; p.py=p.y;
+      var a=angle(p.x,p.y,t);
+      p.vx+=(Math.cos(a)*p.sp-p.vx)*(STEER/p.mass);
+      p.vy+=(Math.sin(a)*p.sp-p.vy)*(STEER/p.mass);
+      if(mouse.active){
+        var dx=p.x-mouse.x,dy=p.y-mouse.y,d2=dx*dx+dy*dy;
+        if(d2<REPEL_R2&&d2>4){
+          var f=(REPEL_R2-d2)/REPEL_R2*(2.6/p.mass)/Math.sqrt(d2);
+          p.vx+=dx*f+mouse.vx*0.05; p.vy+=dy*f+mouse.vy*0.05;  /* cursor momentum transfers */
+        }
+      }
+      p.vx*=DRAG;p.vy*=DRAG;
+      p.x+=p.vx;p.y+=p.vy;p.life++;
+      if(p.x<-10){p.x=W+10;p.px=p.x;} if(p.x>W+10){p.x=-10;p.px=p.x;}
+      if(p.y<-10){p.y=H+10;p.py=p.y;} if(p.y>H+10){p.y=-10;p.py=p.y;}
+      if(p.life>p.max){p.life=0;p.x=Math.random()*W;p.y=Math.random()*H;p.px=p.x;p.py=p.y;p.vx=0;p.vy=0;}
+
+      var k=p.life/p.max,fade=Math.sin(k*Math.PI);
+      var speed=Math.hypot(p.vx,p.vy);
+      var hv=Math.min(1,speed/2.4);              /* velocity → temperature */
+      var c=heat(hv);
+      var alpha=0.10+fade*0.18+hv*0.30;
+      ctx.strokeStyle=paint(c,alpha);
+      ctx.lineWidth=1+hv*1.6;
+      ctx.lineCap="round";
+      ctx.beginPath();ctx.moveTo(p.px,p.py);
+      ctx.lineTo(p.x-(p.vx*2),p.y-(p.vy*2));     /* streak trails behind velocity */
+      ctx.lineTo(p.x,p.y);ctx.stroke();
+    }
+
+    /* click sparks: projectile physics, gravity and all */
+    for(i=sparks.length-1;i>=0;i--){
+      var s=sparks[i];
+      s.px=s.x;s.py=s.y;
+      s.vy+=GRAV; s.vx*=0.985; s.vy*=0.985;
+      s.x+=s.vx; s.y+=s.vy; s.life++;
+      if(s.life>s.max||s.y>H+20){sparks.splice(i,1);continue;}
+      var sk=1-s.life/s.max;
+      var sc=heat(Math.min(1,Math.hypot(s.vx,s.vy)/6));
+      ctx.strokeStyle=paint(sc,0.25+sk*0.65);
+      ctx.lineWidth=1.6*sk+0.4;
+      ctx.beginPath();ctx.moveTo(s.px,s.py);ctx.lineTo(s.x,s.y);ctx.stroke();
+    }
+
+    raf=requestAnimationFrame(step);
+  }
+  var raf=0;
+  function start(){if(!raf)raf=requestAnimationFrame(step);}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+  addEventListener("resize",resize,{passive:true});
+  document.addEventListener("visibilitychange",function(){document.hidden?stop():start();});
+
+  resize();
+  if(reduce){
+    for(var j=0;j<parts.length;j++){var q=parts[j];
+      ctx.fillStyle=paint(heat(Math.random()*0.5),0.12);
+      ctx.fillRect(q.x,q.y,1.3,1.3);}
+  } else { start(); }
+
+  /* strike: a burst of sparks wherever you click */
+  if(!reduce){
+    addEventListener("pointerdown",function(e){
+      var n=16+Math.floor(Math.random()*10);
+      for(var i=0;i<n;i++){
+        var a=Math.random()*Math.PI*2, v=2+Math.random()*5;
+        sparks.push({x:e.clientX,y:e.clientY,px:e.clientX,py:e.clientY,
+          vx:Math.cos(a)*v,vy:Math.sin(a)*v-1.5,
+          life:0,max:40+Math.random()*45});
+      }
+      if(cur){cur.style.transform+=" scale(1.35)";}
+    },{passive:true});
+  }
+
+  /* ---------- the headline heats near the cursor ---------- */
+  var chars=[],charEls=[];
+  function splitChars(){
+    var h=document.getElementById("thesis");
+    var spans=h.querySelectorAll(".q,.line2");
+    spans.forEach(function(node){
+      var walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null),texts=[],tn;
+      while((tn=walker.nextNode()))texts.push(tn);
+      texts.forEach(function(txt){
+        var frag=document.createDocumentFragment();
+        var base=txt.parentElement.closest(".a")?"a":(txt.parentElement.closest(".q")?"q":"f");
+        for(var i=0;i<txt.data.length;i++){
+          var c=txt.data[i];
+          if(c===" "){frag.appendChild(document.createTextNode(" "));continue;}
+          var sp=document.createElement("span");
+          sp.className="ch";sp.dataset.b=base;sp.textContent=c;
+          sp.setAttribute("aria-hidden","true");
+          frag.appendChild(sp);
+        }
+        txt.parentNode.replaceChild(frag,txt);
+      });
+    });
+    charEls=Array.prototype.slice.call(document.querySelectorAll("#thesis .ch"));
+    measureChars();
+  }
+  function measureChars(){
+    chars=charEls.map(function(el){
+      var r=el.getBoundingClientRect();
+      return {el:el,x:r.left+r.width/2,y:r.top+r.height/2};
+    });
+  }
+  function baseColor(b){
+    return b==="a"?rgb(pal.accent):(b==="q"?rgb(pal.dim):rgb(pal.fg));
+  }
+  var charRaf=0;
+  function charLoop(t){
+    for(var i=0;i<chars.length;i++){
+      var c=chars[i];
+      var d2=(c.x-mouse.x)*(c.x-mouse.x)+(c.y-mouse.y)*(c.y-mouse.y);
+      var near=mouse.active?Math.max(0,1-d2/26000):0;
+      /* the held phrase breathes ember on its own, each letter out of phase */
+      var b=c.el.dataset.b;
+      var amb=b==="a"?(Math.sin(t*0.0016+i*0.55)*0.5+0.5)*0.45:0;
+      var col=baseColor(b);
+      if(amb>0)col=mix(col,rgb(pal.ember),amb);
+      if(near>0)col=mix(col,rgb(pal.spark),Math.min(1,near*1.25));
+      c.el.style.color="rgb("+(col[0]|0)+","+(col[1]|0)+","+(col[2]|0)+")";
+    }
+    charRaf=requestAnimationFrame(charLoop);
+  }
+
+  /* ---------- bespoke cursor with velocity readout ---------- */
+  var readout=document.getElementById("readout");
+  var cur=document.getElementById("cur");
+  var dot=document.getElementById("dot");
+  var tx=innerWidth/2,ty=innerHeight/2,rx=tx,ry=ty,hovering=false;
+  var lx=tx,ly=ty,lt=0,vel=0;
+
+  function fmt(n){return String(Math.round(n)).padStart(4," ");}
+
+  if(fine&&!reduce){
+    document.body.classList.add("cur-on");
+    splitChars();
+    addEventListener("resize",measureChars,{passive:true});
+    charRaf=requestAnimationFrame(charLoop);
+
+    addEventListener("mousemove",function(e){
+      var now=performance.now();
+      if(lt){var dt=Math.max(1,now-lt);
+        var iv=Math.hypot(e.clientX-lx,e.clientY-ly)/dt*16;
+        vel=vel*0.8+iv*0.2;
+        mouse.vx=(e.clientX-lx)/dt*16; mouse.vy=(e.clientY-ly)/dt*16;
+      }
+      lx=e.clientX;ly=e.clientY;lt=now;
+      tx=e.clientX;ty=e.clientY;
+      mouse.x=tx;mouse.y=ty;mouse.active=true;
+      cur.style.opacity="1";dot.style.opacity="1";
+      dot.style.transform="translate("+tx+"px,"+ty+"px)";
+      readout.textContent="x "+fmt(tx)+"  y "+fmt(ty)+"  v "+String(vel.toFixed(1)).padStart(5," ");
+    },{passive:true});
+    addEventListener("mouseleave",function(){
+      cur.style.opacity="0";dot.style.opacity="0";
+      mouse.active=false;readout.innerHTML="<b>idle</b>";
+    });
+    document.addEventListener("mouseover",function(e){
+      if(e.target.closest("a,button"))hovering=true;
+    });
+    document.addEventListener("mouseout",function(e){
+      if(e.target.closest("a,button"))hovering=false;
+    });
+    (function follow(){
+      rx+=(tx-rx)*0.18;ry+=(ty-ry)*0.18;
+      vel*=0.96;
+      var sc=hovering?0.6:1+Math.min(0.5,vel*0.012);   /* the reticle swells with speed */
+      var rot=hovering?45:0;
+      cur.style.transform="translate("+rx+"px,"+ry+"px) rotate("+rot+"deg) scale("+sc+")";
+      requestAnimationFrame(follow);
+    })();
+  } else {
+    cur.remove();dot.remove();readout.remove();
+  }
+})();
+</script>
 </body>
 </html>
