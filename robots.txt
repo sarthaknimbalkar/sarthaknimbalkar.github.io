@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://sarthaknimbalkar.in/sitemap.xml
+Sitemap: https://sarthaknimbalkar.in/writing/sitemap.xml
