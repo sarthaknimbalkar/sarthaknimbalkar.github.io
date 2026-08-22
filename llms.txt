@@ -1,8 +1,38 @@
 # Sarthak Nimbalkar
 
+> Sarthak Nimbalkar is an independent software engineer and founder building autonomous AI systems end to end, and the controls that keep them accountable. Remote, shipping since 2019.
+
 Everything can be automated except the one who automates.
 
-Real builds, real judgment calls, and the doctrines that come out of them — for the engineer who wants to become impossible to replace.
+## Who
 
-## Posts
+Sarthak Nimbalkar is an independent software engineer and founder. He builds autonomous AI systems from the data layer to the interface to the part that takes money, one person, end to end. He works remotely and co-founded Vervelio, a studio that builds and launches its own products.
 
+## What he builds
+
+- Agentic and multi-agent AI systems that plan, decide, and act without a human in the loop
+- The governance layer those systems need to be trusted with real users and real money: cost ceilings, rate limiting, audit trails, human-in-the-loop approval gates, and hard boundaries on the decisions the operator keeps
+- Large language model applications and the observability and cost controls around them
+- Full-stack products, database to deployment
+
+## Facts
+
+- Name: Sarthak Nimbalkar
+- Role: Independent software engineer and founder
+- Company: Vervelio (https://vervelio.com)
+- Location: Michigan, United States; works remotely, worldwide
+- Active since: 2019
+- Focus: autonomous AI systems, AI governance, agentic architectures
+
+## Writing
+
+- (none published yet)
+
+## Links
+
+- Site: https://sarthaknimbalkar.in
+- GitHub: https://github.com/sarthaknimbalkar
+- LinkedIn: https://www.linkedin.com/in/sarthak-nimbalkar/
+- Bluesky: https://bsky.app/profile/sarthaknimbalkar.bsky.social
+- Newsletter: https://sarthaktellstales.beehiiv.com/subscribe
+- Company: https://vervelio.com

@@ -1,0 +1,12 @@
+{
+  "name": "Sarthak Nimbalkar",
+  "short_name": "Sarthak",
+  "description": "Independent software engineer building autonomous AI systems end to end.",
+  "icons": [
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/favicon.svg", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#080605",
+  "background_color": "#080605",
+  "display": "browser"
+}
