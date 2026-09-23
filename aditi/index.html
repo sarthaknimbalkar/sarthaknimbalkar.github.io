@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditi — The Blockbuster</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rozha+One&family=Yatra+One&family=Poppins:wght@300;400;600;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --maroon:#4a0419; --maroon2:#7a0a2e; --gold:#ffcc33; --gold2:#e6a100;
+  --magenta:#ff2e88; --marigold:#ff8c00; --teal:#00d1b2; --cream:#fff4dc; --ink:#1a0008;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;color:var(--cream);background:var(--ink);overflow-x:hidden}
+body.locked{overflow:hidden}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:90}
+section{position:relative;min-height:100vh;padding:90px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.wrap{max-width:1050px;width:100%}
+h2{font-family:'Yatra One',cursive;font-size:clamp(2.2rem,7vw,4rem);color:var(--gold);text-shadow:0 4px 0 var(--maroon2),0 0 30px rgba(255,204,51,.4);margin-bottom:8px}
+.kicker{font-family:'Bebas Neue';letter-spacing:.35em;color:var(--magenta);font-size:1.1rem;margin-bottom:10px}
+.lead{opacity:.85;max-width:620px;margin:0 auto 40px}
+button{font-family:'Bebas Neue';letter-spacing:.12em;font-size:1.35rem;padding:14px 34px;border:none;border-radius:50px;cursor:pointer;color:var(--ink);background:linear-gradient(180deg,#ffe27a,var(--gold2));box-shadow:0 6px 0 #8a5a00,0 12px 30px rgba(255,204,51,.35);transition:transform .15s,box-shadow .15s}
+button:hover{transform:translateY(-2px)}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #8a5a00}
+button.alt{background:linear-gradient(180deg,#ff6fb0,var(--magenta));color:#fff;box-shadow:0 6px 0 #8a0040,0 12px 30px rgba(255,46,136,.35)}
+
+/* toran (marigold garland) */
+.toran{position:absolute;top:0;left:0;right:0;height:70px;display:flex;justify-content:space-around;pointer-events:none;z-index:3}
+.toran span{display:block;width:22px;background:repeating-linear-gradient(180deg,var(--marigold) 0 14px,#ffb300 14px 28px);border-radius:0 0 12px 12px;animation:sway 3s ease-in-out infinite;transform-origin:top}
+.toran span:nth-child(odd){height:60px;animation-delay:-.7s}
+.toran span:nth-child(even){height:40px;background:repeating-linear-gradient(180deg,#ffb300 0 14px,var(--magenta) 14px 28px)}
+@keyframes sway{50%{transform:rotate(6deg)}}
+
+/* ===== INTRO ===== */
+#intro{position:fixed;inset:0;z-index:80;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1s}
+.clap{width:230px;cursor:pointer;user-select:none}
+.clap .top{height:44px;background:repeating-linear-gradient(-45deg,#fff 0 22px,#111 22px 44px);border-radius:6px 6px 0 0;transform-origin:left bottom;transform:rotate(-24deg);transition:transform .15s}
+.clap.snap .top{transform:rotate(0)}
+.clap .body{background:#111;border:3px solid #fff;padding:14px;font-family:'Bebas Neue';text-align:left;letter-spacing:.1em;font-size:1.1rem;line-height:1.6}
+.clap .body b{color:var(--gold)}
+.hint{margin-top:26px;font-family:'Bebas Neue';letter-spacing:.3em;color:var(--gold);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.25}}
+.leader{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(circle,#555,#111)}
+.leader.on{display:flex}
+.leader .ring{position:absolute;width:62vmin;height:62vmin;border:4px solid #ddd;border-radius:50%}
+.leader .ring2{width:50vmin;height:50vmin}
+.leader .sweep{position:absolute;width:62vmin;height:62vmin;border-radius:50%;background:conic-gradient(rgba(255,255,255,.35) var(--a,0deg),transparent 0)}
+.leader .cross{position:absolute;width:100%;height:3px;background:#ddd}.leader .cross.v{width:3px;height:100%}
+.leader .num{font-family:'Bebas Neue';font-size:40vmin;color:#fff;position:relative}
+.presents{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000}
+.presents.on{display:flex}
+.presents p{font-family:'Bebas Neue';letter-spacing:.5em;font-size:clamp(1rem,3vw,1.6rem);opacity:0;animation:fadeIn 1.2s forwards}
+.presents p:nth-child(2){animation-delay:1.2s;color:var(--gold);font-family:'Rozha One';letter-spacing:.05em;font-size:clamp(2rem,6vw,3.5rem)}
+@keyframes fadeIn{to{opacity:1}}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:85;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .4s steps(3) infinite}
+@keyframes grain{33%{transform:translate(-8px,5px)}66%{transform:translate(6px,-7px)}}
+
+/* ===== POSTER ===== */
+#poster{background:radial-gradient(ellipse at 50% 30%,var(--maroon2),var(--maroon) 55%,var(--ink));}
+.rays{position:absolute;width:250vmax;height:250vmax;top:50%;left:50%;margin:-125vmax;background:repeating-conic-gradient(rgba(255,204,51,.09) 0 8deg,transparent 8deg 16deg);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.marquee{position:relative;padding:34px clamp(18px,5vw,60px);border-radius:24px;background:linear-gradient(180deg,#2a0010,#150006);border:6px solid var(--gold2);box-shadow:0 0 0 3px #000,0 0 60px rgba(255,204,51,.35);max-width:900px}
+.bulbs{position:absolute;inset:-6px;pointer-events:none}
+.bulb{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff6c2;box-shadow:0 0 10px #ffd84d,0 0 20px #ffb300;animation:bulb 1s infinite}
+.bulb.b{animation-delay:.5s}
+@keyframes bulb{50%{background:#6b4a00;box-shadow:none}}
+.cert{display:inline-block;border:2px solid var(--gold);color:var(--gold);font-family:'Bebas Neue';letter-spacing:.2em;padding:4px 14px;border-radius:4px;margin-bottom:14px;font-size:.95rem}
+.title{font-family:'Rozha One';font-size:clamp(4.5rem,20vw,12rem);line-height:.9;background:linear-gradient(180deg,#fff7c2 10%,var(--gold) 45%,var(--gold2) 60%,#8a5a00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 0 #3a0010) drop-shadow(0 0 25px rgba(255,204,51,.5));animation:zoomIn 1.4s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes zoomIn{from{transform:scale(3);opacity:0}}
+.title-hi{font-family:'Yatra One';color:var(--magenta);font-size:clamp(1.6rem,5vw,2.6rem);margin-top:4px;text-shadow:0 0 18px rgba(255,46,136,.6)}
+.tagline{font-family:'Bebas Neue';letter-spacing:.25em;font-size:clamp(1rem,3vw,1.5rem);margin:18px 0 6px}
+.stars{color:var(--gold);font-size:1.5rem;letter-spacing:.2em}
+.reviews{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.review{font-size:.85rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,204,51,.3);padding:8px 14px;border-radius:30px}
+.review i{color:var(--gold);font-style:normal}
+.dates{margin-top:24px;font-family:'Bebas Neue';letter-spacing:.3em;color:var(--teal)}
+.theme{display:inline-flex;align-items:center;gap:14px;margin-top:26px;padding:12px 18px;border-radius:60px;background:linear-gradient(90deg,rgba(255,46,136,.25),rgba(255,204,51,.2));border:2px solid var(--magenta);color:var(--cream);text-decoration:none;text-align:left;transition:transform .2s}
+.theme:hover{transform:scale(1.05)}
+.theme .disc{font-size:2.2rem;animation:spin 3s linear infinite}
+.theme small{display:block;font-family:'Bebas Neue';letter-spacing:.25em;color:var(--gold);font-size:.8rem}
+.theme b{display:block;font-family:'Yatra One';font-size:1.4rem;font-weight:400}
+.theme em{font-size:.75rem;opacity:.75;font-style:normal}
+.theme .play{width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.musicbtn{position:fixed;right:16px;bottom:16px;z-index:70;width:64px;height:64px;padding:0;border-radius:50%;font-size:1.8rem;display:none}
+.musicbtn.show{display:block}
+.musicbtn.playing{animation:thump .4s infinite alternate}
+@keyframes thump{to{transform:scale(1.12)}}
+
+/* ===== DIALOGUES ===== */
+#dialogues{background:linear-gradient(180deg,var(--ink),#22000c)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.dcard{position:relative;min-height:190px;border-radius:18px;cursor:pointer;perspective:1200px}
+.dcard .in{position:absolute;inset:0;transition:transform .8s cubic-bezier(.3,1.5,.5,1);transform-style:preserve-3d}
+.dcard.open .in{transform:rotateY(180deg)}
+.dcard .f,.dcard .bk{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px}
+.dcard .f{background:linear-gradient(135deg,var(--maroon2),var(--maroon));border:2px solid rgba(255,204,51,.45)}
+.dcard .f .emo{font-size:3.2rem;margin-bottom:8px}
+.dcard .f small{font-family:'Bebas Neue';letter-spacing:.25em;color:var(--gold)}
+.dcard .bk{transform:rotateY(180deg);background:var(--cream);color:var(--maroon)}
+.dcard .bk q{font-family:'Yatra One';font-size:1.2rem;line-height:1.45;quotes:"“" "”"}
+.dcard .bk span{margin-top:12px;font-size:.8rem;opacity:.7}
+.pow{position:absolute;font-family:'Bebas Neue';font-size:3rem;color:var(--gold);-webkit-text-stroke:2px var(--maroon);pointer-events:none;z-index:5;animation:pow .8s forwards}
+@keyframes pow{0%{transform:scale(0) rotate(-20deg)}40%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1) translateY(-60px);opacity:0}}
+
+/* ===== QUIZ ===== */
+#quiz{background:radial-gradient(circle at 20% 20%,#3b0a52,var(--ink) 70%)}
+.qbox{max-width:640px;margin:0 auto;background:rgba(255,255,255,.05);border:2px solid rgba(255,46,136,.4);border-radius:24px;padding:34px 24px;backdrop-filter:blur(6px)}
+.qprog{height:6px;background:rgba(255,255,255,.12);border-radius:6px;overflow:hidden;margin-bottom:24px}
+.qprog div{height:100%;width:0;background:linear-gradient(90deg,var(--magenta),var(--gold));transition:width .5s}
+.qq{font-family:'Yatra One';font-size:1.5rem;margin-bottom:22px;color:var(--gold)}
+.opts{display:grid;gap:12px}
+.opt{font-family:'Poppins';letter-spacing:0;font-size:1rem;text-align:left;padding:14px 20px;border-radius:14px;background:rgba(255,255,255,.08);color:var(--cream);box-shadow:none;border:1px solid rgba(255,255,255,.15)}
+.opt:hover{background:rgba(255,46,136,.25);border-color:var(--magenta)}
+.result .rname{font-family:'Rozha One';font-size:clamp(2.4rem,8vw,3.6rem);color:var(--magenta);margin:8px 0}
+.result .rline{font-family:'Yatra One';font-size:1.3rem;color:var(--gold);margin-bottom:12px}
+.result p{opacity:.85;margin-bottom:22px}
+.result .emo{font-size:4rem}
+
+/* ===== CAKE ===== */
+#cake{background:linear-gradient(180deg,#22000c,var(--maroon))}
+.stage{position:relative;width:300px;height:260px;margin:30px auto}
+.spot{position:absolute;left:50%;top:-240px;width:420px;height:560px;margin-left:-210px;background:radial-gradient(ellipse at 50% 100%,rgba(255,240,180,.3),transparent 60%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);pointer-events:none}
+.tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:14px 14px 10px 10px}
+.t1{bottom:0;width:290px;height:90px;background:linear-gradient(180deg,#d94f7a,#a8264f)}
+.t2{bottom:82px;width:220px;height:80px;background:linear-gradient(180deg,#ffd166,#e6a100)}
+.t3{bottom:154px;width:150px;height:60px;background:linear-gradient(180deg,#ff8fb8,#e0457f)}
+.tier::before{content:"";position:absolute;top:0;left:0;right:0;height:18px;background:radial-gradient(circle at 10px 0,var(--cream) 10px,transparent 11px) 0 0/20px 18px repeat-x}
+.t1::after{content:"ADITI";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Rozha One';font-size:2.4rem;color:var(--cream);text-shadow:0 2px 0 #6b0a2e}
+.candles{position:absolute;bottom:212px;left:50%;transform:translateX(-50%);display:flex;gap:18px}
+.candle{width:10px;height:44px;border-radius:3px;background:repeating-linear-gradient(45deg,#fff 0 5px,var(--teal) 5px 10px);position:relative}
+.flame{position:absolute;top:-24px;left:50%;width:15px;height:24px;margin-left:-7.5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff 12%,var(--gold) 45%,#ff5a00 85%);box-shadow:0 0 20px var(--gold),0 0 40px #ff8c00;animation:flick .12s infinite alternate;transition:opacity .3s,transform .3s}
+.flame.out{opacity:0;transform:translateY(-10px) scale(.3)}
+@keyframes flick{to{transform:scale(1.1) rotate(4deg)}}
+.smoke{position:absolute;top:-30px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:rgba(220,220,220,.6);animation:smoke 1.5s forwards}
+@keyframes smoke{to{transform:translateY(-70px) scale(4);opacity:0}}
+.cakebtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+#wishmsg{margin-top:22px;min-height:2em;font-family:'Yatra One';font-size:1.4rem;color:var(--gold)}
+
+/* ===== DANCE ===== */
+#dance{background:#0a0005;transition:background .3s}
+#dance.party{animation:disco 1.6s infinite}
+@keyframes disco{0%{background:#2a0038}25%{background:#00283a}50%{background:#3a1a00}75%{background:#3a0018}}
+.ball{font-size:4.5rem;animation:spin 4s linear infinite;display:inline-block;filter:drop-shadow(0 0 20px #fff)}
+.lights{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
+#dance.party .lights{opacity:1}
+.beam{position:absolute;top:-10%;width:120px;height:130%;transform-origin:top center;filter:blur(8px);opacity:.35;animation:beam 3s ease-in-out infinite alternate}
+@keyframes beam{from{transform:rotate(-30deg)}to{transform:rotate(30deg)}}
+.floor{display:flex;gap:clamp(8px,3vw,26px);justify-content:center;margin:34px 0;font-size:clamp(2.6rem,9vw,4.5rem);min-height:90px}
+.floor span{display:inline-block}
+#dance.party .floor span{animation:jig .4s infinite alternate}
+#dance.party .floor span:nth-child(even){animation-delay:.2s}
+@keyframes jig{from{transform:translateY(0) rotate(-12deg)}to{transform:translateY(-22px) rotate(12deg)}}
+.steps{font-family:'Bebas Neue';letter-spacing:.2em;font-size:clamp(1.6rem,5vw,2.6rem);color:var(--gold);min-height:1.4em;margin-bottom:24px}
+
+/* ===== TICKET ===== */
+#ticket{background:linear-gradient(180deg,var(--maroon),var(--ink))}
+.tk{display:flex;max-width:720px;width:100%;margin:0 auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6))}
+.tk-main{flex:1;background:var(--cream);color:var(--maroon);padding:26px;border-radius:16px 0 0 16px;text-align:left;position:relative;
+  -webkit-mask:radial-gradient(circle 14px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 14px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 14px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 14px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk-main h3{font-family:'Rozha One';font-size:2rem;line-height:1}
+.tk-main .sm{font-family:'Bebas Neue';letter-spacing:.2em;color:var(--magenta)}
+.tk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.tk-grid div{font-size:.75rem;opacity:.7}.tk-grid b{display:block;font-size:1rem;opacity:1}
+.tk-stub{width:150px;background:var(--gold);color:var(--maroon);border-left:3px dashed var(--maroon);border-radius:0 16px 16px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;cursor:pointer;transition:transform .8s cubic-bezier(.5,-0.4,.6,1.4),opacity .8s;
+  -webkit-mask:radial-gradient(circle 14px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 14px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 14px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 14px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk-stub.torn{transform:translate(60px,120px) rotate(28deg);opacity:0}
+.tk-stub b{font-family:'Bebas Neue';font-size:1.6rem;letter-spacing:.1em;writing-mode:vertical-rl;transform:rotate(180deg)}
+.barcode{height:40px;margin-top:14px;background:repeating-linear-gradient(90deg,var(--maroon) 0 2px,transparent 2px 4px,var(--maroon) 4px 7px,transparent 7px 9px)}
+#admit{margin-top:24px;font-family:'Yatra One';font-size:1.3rem;color:var(--gold);min-height:1.6em}
+
+/* ===== CREDITS ===== */
+#credits{background:#000;min-height:100vh;padding:0}
+.crwin{position:relative;height:100vh;width:100%;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.roll{position:absolute;left:0;right:0;top:100%;text-align:center}
+.roll.go{animation:roll 38s linear forwards}
+@keyframes roll{to{transform:translateY(calc(-100% - 100vh))}}
+.roll .role{font-family:'Bebas Neue';letter-spacing:.35em;color:var(--gold);font-size:.95rem;margin-top:34px}
+.roll .who{font-family:'Poppins';font-weight:600;font-size:1.35rem}
+.roll .big{font-family:'Rozha One';font-size:clamp(3rem,10vw,5rem);color:var(--gold);margin:40px 0 10px}
+.roll .end{font-family:'Yatra One';font-size:clamp(2rem,7vw,3.4rem);color:var(--magenta);margin-top:80px}
+
+.reveal{opacity:0;transform:translateY(50px) scale(.97);transition:all 1s cubic-bezier(.2,.9,.3,1)}
+.reveal.show{opacity:1;transform:none}
+footer{background:#000;text-align:center;padding:24px;font-size:.8rem;opacity:.5}
+@media (max-width:560px){.tk{flex-direction:column}.tk-main{border-radius:16px 16px 0 0;-webkit-mask:none;mask:none}.tk-stub{width:auto;border-left:none;border-top:3px dashed var(--maroon);border-radius:0 0 16px 16px;-webkit-mask:none;mask:none}.tk-stub b{writing-mode:horizontal-tb;transform:none}.tk-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body class="locked">
+<canvas id="fx"></canvas>
+<div class="grain"></div>
+<button class="musicbtn" id="music" title="Dhol on/off">🥁</button>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="clap" id="clap">
+    <div class="top"></div>
+    <div class="body">
+      <div>PRODUCTION: <b>ADITI KA BIRTHDAY</b></div>
+      <div>SCENE: <b>01</b> &nbsp; TAKE: <b>01</b></div>
+      <div>DIRECTOR: <b>DESTINY</b></div>
+    </div>
+  </div>
+  <div class="hint">TAP THE CLAPBOARD — LIGHTS, CAMERA, ACTION!</div>
+  <div class="leader" id="leader">
+    <div class="sweep" id="sweep"></div><div class="ring"></div><div class="ring ring2"></div>
+    <div class="cross"></div><div class="cross v"></div><div class="num" id="num">3</div>
+  </div>
+  <div class="presents" id="presents">
+    <p>FRIENDSHIP FILMS PRESENTS</p>
+    <p>Ek Aditi Production</p>
+  </div>
+</div>
+
+<!-- POSTER -->
+<section id="poster">
+  <div class="rays"></div>
+  <div class="toran" id="toran1"></div>
+  <div class="marquee">
+    <div class="bulbs" id="bulbs"></div>
+    <div class="cert">U/A · UNIVERSALLY ADORABLE</div>
+    <div class="title">ADITI</div>
+    <div class="title-hi">अदिति — The Birthday Blockbuster</div>
+    <div class="tagline">EK LADKI · EK CAKE · INFINITE DRAMA</div>
+    <div class="stars">★★★★★</div>
+    <div class="reviews">
+      <div class="review">"Paisa vasool!" <i>— Every friend ever</i></div>
+      <div class="review">"Cutest heroine of the decade" <i>— Filmfare (probably)</i></div>
+      <div class="review">"Iconic. Legendary." <i>— Her Mom</i></div>
+    </div>
+    <div class="dates">NOW SHOWING · IN CINEMAS NEAR YOUR HEART</div>
+    <a class="theme" id="theme" href="https://www.youtube.com/results?search_query=Kabhi+Kabhi+Aditi+Jaane+Tu+Ya+Jaane+Na" target="_blank" rel="noopener">
+      <span class="disc">💿</span>
+      <span><small>OFFICIAL THEME SONG</small><b>Kabhi Kabhi Aditi</b><em>Jaane Tu… Ya Jaane Na · A.R. Rahman</em></span>
+      <span class="play">▶</span>
+    </a>
+  </div>
+</section>
+
+<!-- DIALOGUES -->
+<section id="dialogues">
+  <div class="wrap reveal">
+    <div class="kicker">★ THE DIALOGUE-BAAZI ★</div>
+    <h2>Filmy Dialogues, Aditi Edition</h2>
+    <p class="lead">Tap each reel for a classic dialogue, remixed just for her. Dishoom included.</p>
+    <div class="dgrid" id="dgrid"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="wrap reveal">
+    <div class="kicker">★ THE BIG REVEAL ★</div>
+    <h2>Which Heroine Is Aditi Today?</h2>
+    <p class="lead">Four questions. One filmy destiny.</p>
+    <div class="qbox" id="qbox"></div>
+  </div>
+</section>
+
+<!-- CAKE -->
+<section id="cake">
+  <div class="toran" id="toran2"></div>
+  <div class="wrap reveal">
+    <div class="kicker">★ THE CLIMAX ★</div>
+    <h2>Cake Ka Grand Entry</h2>
+    <p class="lead">Make a wish, heroine. Blow into your mic, or just tap the button.</p>
+    <div class="stage">
+      <div class="spot"></div>
+      <div class="tier t1"></div><div class="tier t2"></div><div class="tier t3"></div>
+      <div class="candles" id="candles"></div>
+    </div>
+    <div class="cakebtns">
+      <button id="blow">PHOOOO! 🌬️</button>
+      <button class="alt" id="mic">🎤 BLOW INTO THE MIC</button>
+    </div>
+    <div id="wishmsg"></div>
+  </div>
+</section>
+
+<!-- DANCE -->
+<section id="dance">
+  <div class="lights" id="lights"></div>
+  <div class="wrap reveal">
+    <div class="kicker">★ THE ITEM NUMBER ★</div>
+    <h2>Sangeet Night!</h2>
+    <p class="lead">No Bollywood movie is complete without a dance number. Press play and do the steps.</p>
+    <div class="ball">🪩</div>
+    <div class="floor"><span>💃</span><span>🕺</span><span>💃</span><span>🕺</span><span>💃</span></div>
+    <div class="steps" id="steps">READY?</div>
+    <button class="alt" id="party">NACHLE! 🔥</button>
+  </div>
+</section>
+
+<!-- TICKET -->
+<section id="ticket">
+  <div class="wrap reveal">
+    <div class="kicker">★ HOUSEFULL ★</div>
+    <h2>Your Golden Ticket</h2>
+    <p class="lead">One ticket, one seat, reserved forever. Tear the stub to get in.</p>
+    <div class="tk">
+      <div class="tk-main">
+        <div class="sm">FRIENDSHIP TALKIES · PREMIERE</div>
+        <h3>ADITI: THE BIRTHDAY BLOCKBUSTER</h3>
+        <div class="tk-grid">
+          <div>SCREEN<b>Dil No. 1</b></div>
+          <div>ROW<b>VIP</b></div>
+          <div>SEAT<b>Forever</b></div>
+          <div>SHOW<b id="tdate">Today</b></div>
+          <div>TIME<b>All Day</b></div>
+          <div>PRICE<b>1 Smile</b></div>
+        </div>
+        <div class="barcode"></div>
+      </div>
+      <div class="tk-stub" id="stub"><b>ADMIT ONE</b></div>
+    </div>
+    <div id="admit"></div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section id="credits">
+  <div class="crwin">
+    <div class="roll" id="roll">
+      <div class="big">ADITI</div>
+      <div class="who" style="opacity:.7">The Birthday Blockbuster</div>
+      <div class="role">STARRING</div><div class="who">Aditi, as herself (iconic)</div>
+      <div class="role">DIRECTED BY</div><div class="who">Destiny</div>
+      <div class="role">MUSIC BY</div><div class="who">Aditi's laugh</div>
+      <div class="role">THEME SONG</div><div class="who">"Kabhi Kabhi Aditi" (on repeat, obviously)</div>
+      <div class="role">CHOREOGRAPHY</div><div class="who">Her 2 AM kitchen dance moves</div>
+      <div class="role">COSTUME DESIGN</div><div class="who">"I have nothing to wear" (full wardrobe)</div>
+      <div class="role">SPECIAL APPEARANCE</div><div class="who">The Cake 🎂</div>
+      <div class="role">STUNTS</div><div class="who">Surviving Monday mornings</div>
+      <div class="role">CATERING</div><div class="who">Maggi, chai &amp; golgappe</div>
+      <div class="role">DRAMA CONSULTANT</div><div class="who">Aditi (again)</div>
+      <div class="role">PRODUCED WITH LOVE BY</div><div class="who">Your friend, forever</div>
+      <div class="role">NO FRIENDS WERE HARMED</div><div class="who">(except by her roasts)</div>
+      <div class="end">Picture abhi baaki hai, dost! 🎬</div>
+      <div class="who" style="margin-top:14px;opacity:.8">Happy Birthday, Aditi 💛</div>
+    </div>
+  </div>
+</section>
+<footer>A Friendship Films Production · Made with 💛 for Aditi</footer>
+
+<script>
+/* ---------- AUDIO (Web Audio, no files) ---------- */
+let AC;
+const ac=()=>AC||(AC=new (window.AudioContext||window.webkitAudioContext)());
+function tone(f1,f2,dur,type='sine',vol=.5,when=0){
+  const a=ac(),t=a.currentTime+when,o=a.createOscillator(),g=a.createGain();
+  o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g).connect(a.destination);o.start(t);o.stop(t+dur);
+}
+function noise(dur,freq,vol=.4,when=0,q=1){
+  const a=ac(),t=a.currentTime+when,b=a.createBuffer(1,a.sampleRate*dur,a.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+  s.buffer=b;f.type='bandpass';f.frequency.value=freq;f.Q.value=q;
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  s.connect(f).connect(g).connect(a.destination);s.start(t);
+}
+const dhaa=(w=0)=>{tone(160,45,.35,'sine',.9,w);noise(.05,900,.25,w)};
+const tak=(w=0)=>noise(.08,3200,.45,w,2);
+const dishoom=()=>{noise(.5,500,.8,0,.6);tone(220,40,.5,'sawtooth',.25)};
+const ting=()=>{[880,1320,1760].forEach((f,i)=>tone(f,f*.99,.6,'triangle',.25,i*.07))};
+
+// dhol loop: classic bhangra-ish "DHA . tak DHA . tak tak ."
+let loopT=null,bpm=110;
+const pattern=['D','','t','D','','t','t',''];
+function startDhol(){
+  if(loopT)return;let i=0;
+  const step=()=>{const p=pattern[i%8];if(p==='D')dhaa();if(p==='t')tak();i++;loopT=setTimeout(step,60000/bpm/2)};
+  step();document.getElementById('music').classList.add('playing');
+}
+function stopDhol(){clearTimeout(loopT);loopT=null;document.getElementById('music').classList.remove('playing')}
+document.getElementById('music').onclick=()=>{ac().resume();loopT?stopDhol():startDhol()};
+
+/* ---------- FX CANVAS: confetti + marigold petals ---------- */
+const cv=document.getElementById('fx'),cx=cv.getContext('2d');let P=[];
+const fit=()=>{cv.width=innerWidth;cv.height=innerHeight};fit();addEventListener('resize',fit);
+const pal=['#ffcc33','#ff2e88','#ff8c00','#00d1b2','#fff4dc','#b14cff'];
+function confetti(n=200,x=null,y=null){
+  for(let i=0;i<n;i++){
+    const burst=x!==null;
+    P.push({k:Math.random()<.35?'petal':'rect',
+      x:burst?x:Math.random()*cv.width,y:burst?y:-20-Math.random()*cv.height*.4,
+      vx:burst?(Math.random()-.5)*16:(Math.random()-.5)*2,vy:burst?-Math.random()*14-2:2+Math.random()*3,
+      g:burst?.35:.02,s:5+Math.random()*7,r:Math.random()*6,vr:(Math.random()-.5)*.3,
+      c:pal[Math.random()*pal.length|0]});
+  }
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  P=P.filter(p=>p.y<cv.height+30);
+  for(const p of P){
+    p.vy+=p.g;if(p.vy>6)p.vy=6;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;
+    if(p.k==='petal'){cx.beginPath();cx.ellipse(0,0,p.s*.6,p.s,0,0,Math.PI*2);cx.fill()}
+    else cx.fillRect(-p.s/2,-p.s*.7,p.s,p.s*1.4);
+    cx.restore();
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- INTRO ---------- */
+const clap=document.getElementById('clap');
+clap.onclick=()=>{
+  ac().resume();clap.classList.add('snap');noise(.12,2500,.9);tone(300,80,.15,'square',.3);
+  setTimeout(()=>{
+    const L=document.getElementById('leader'),num=document.getElementById('num'),sw=document.getElementById('sweep');
+    L.classList.add('on');let n=3;
+    const tick=()=>{
+      num.textContent=n;tone(1000,1000,.12,'sine',.3);
+      let s=performance.now();
+      (function a(t){const d=Math.min((t-s)/900,1);sw.style.setProperty('--a',d*360+'deg');if(d<1)requestAnimationFrame(a)})(s);
+      if(--n>=0&&n>0)setTimeout(tick,1000);else setTimeout(showPresents,1000);
+    };tick();
+  },500);
+};
+function showPresents(){
+  document.getElementById('leader').classList.remove('on');
+  document.getElementById('presents').classList.add('on');
+  dhaa();dhaa(.3);dhaa(.6);
+  setTimeout(()=>{
+    const I=document.getElementById('intro');I.style.opacity=0;
+    document.body.classList.remove('locked');
+    setTimeout(()=>I.remove(),1000);
+    confetti(300);ting();startDhol();
+    document.getElementById('music').classList.add('show');
+  },3200);
+}
+
+document.getElementById('theme').addEventListener('click',stopDhol);
+
+/* ---------- POSTER bulbs + torans ---------- */
+function bulbs(){
+  const B=document.getElementById('bulbs'),r=B.getBoundingClientRect();B.innerHTML='';
+  const gap=34,w=r.width,h=r.height;let i=0;
+  const add=(x,y)=>{const d=document.createElement('div');d.className='bulb'+(i++%2?' b':'');d.style.left=x-6+'px';d.style.top=y-6+'px';B.appendChild(d)};
+  for(let x=0;x<=w;x+=gap){add(x,0);add(x,h)}
+  for(let y=gap;y<h;y+=gap){add(0,y);add(w,y)}
+}
+bulbs();addEventListener('resize',bulbs);
+['toran1','toran2'].forEach(id=>{const t=document.getElementById(id);t.innerHTML='<span></span>'.repeat(Math.max(10,Math.floor(innerWidth/48)))});
+
+/* ---------- DIALOGUES ---------- */
+const D=[
+ ['😎','SHAHENSHAH MODE','Rishte mein toh hum tumhare dost lagte hain, naam hai… Birthday Wala Bestie!','Remixed from Shahenshah'],
+ ['💃','DDLJ VIBES','Bade bade shehron mein aisi chhoti chhoti parties hoti rehti hain, Aditi.','Remixed from DDLJ'],
+ ['🦹','MOGAMBO','Mogambo khush hua… cake dekh ke!','Remixed from Mr. India'],
+ ['🚂','JAB WE MET','Main apni favourite hoon. — and honestly, Aditi, you are everyone\'s.','Inspired by Geet, Jab We Met'],
+ ['🕶️','DON','Aditi ko birthday pe gift na dena… mushkil hi nahi, namumkin hai!','Remixed from Don'],
+ ['😭','AMAR PREM','Aditi, I hate tears… aaj sirf smiles allowed!','Remixed from Amar Prem'],
+ ['🎸','JAANE TU… YA JAANE NA','Kabhi kabhi Aditi zindagi mein yunhi koi apna lagta hai… and for us, that\'s YOU.','Her theme song, obviously'],
+ ['🎬','OM SHANTI OM','Agar kisi cheez ko dil se chaaho… toh poori kaaynaat use cake ke saath tumse milane mein lag jaati hai.','Remixed from Om Shanti Om'],
+ ['👑','K3G','Keh diya na? Bas keh diya! Aditi is the main character.','Inspired by K3G'],
+ ['🔥','SHOLAY','Kitne candles the? … Jitne bhi the, sab Aditi ke liye the!','Remixed from Sholay'],
+];
+const G=document.getElementById('dgrid');
+G.innerHTML=D.map(d=>`<div class="dcard"><div class="in"><div class="f"><div class="emo">${d[0]}</div><small>${d[1]}</small></div><div class="bk"><q>${d[2]}</q><span>${d[3]}</span></div></div></div>`).join('');
+const pows=['DISHOOM!','DHISHKYAAON!','TADAA!','WAAH!','ARREY WAAH!'];
+G.querySelectorAll('.dcard').forEach(c=>c.onclick=e=>{
+  const opening=!c.classList.contains('open');c.classList.toggle('open');
+  if(!opening)return;
+  dishoom();
+  const p=document.createElement('div');p.className='pow';p.textContent=pows[Math.random()*pows.length|0];
+  p.style.left=e.clientX-60+'px';p.style.top=e.clientY-40+'px';p.style.position='fixed';
+  document.body.appendChild(p);setTimeout(()=>p.remove(),800);
+});
+
+/* ---------- QUIZ ---------- */
+const Q=[
+ {q:'Her ideal weekend plan?',o:[['Spontaneous trip, no plans!','geet'],['Shopping + looking fabulous','poo'],['Mountains with the gang','naina'],['Cosy movie night with family','simran']]},
+ {q:'Pick a snack:',o:[['Golgappe — extra teekha','geet'],['Anything aesthetic for the gram','poo'],['Maggi at a hill station','naina'],['Maa ke haath ke parathe','simran']]},
+ {q:'Her vibe in the group chat?',o:[['Sends 47 voice notes','geet'],['Rates everyone\'s outfits','poo'],['Plans the trip, nobody follows','naina'],['Good morning messages daily','simran']]},
+ {q:'Pick a song mood:',o:[['Full volume, dancing on the table','geet'],['Walking in slow-mo, hair flip','poo'],['Road trip singalong','naina'],['Mustard fields, arms wide open','simran']]},
+];
+const R={
+ geet:{n:'GEET',e:'🚂',l:'"Main apni favourite hoon!"',t:'Jab We Met energy: chatpati, fearless, and the life of every party. Nobody can match your vibe, Aditi.'},
+ poo:{n:'POO',e:'💅',l:'"Who is she? — Aditi, obviously."',t:'K3G royalty: iconic, stylish, and you rate everyone else\'s outfits a 3/10. Queen behaviour only.'},
+ naina:{n:'NAINA',e:'🏔️',l:'"Ab ki baar, adventure pakka!"',t:'YJHD soul: thoughtful, warm, and secretly the most fun person on the trip. Your friends are lucky.'},
+ simran:{n:'SIMRAN',e:'🌻',l:'"Ja Aditi, jee le apni zindagi!"',t:'DDLJ heart: sweet, dreamy, and pure golden. You make everyone feel at home.'},
+};
+let qi=0,score={};
+const QB=document.getElementById('qbox');
+function renderQ(){
+  if(qi>=Q.length)return result();
+  const it=Q[qi];
+  QB.innerHTML=`<div class="qprog"><div style="width:${qi/Q.length*100}%"></div></div>
+  <div class="kicker">QUESTION ${qi+1} / ${Q.length}</div><div class="qq">${it.q}</div>
+  <div class="opts">${it.o.map((o,i)=>`<button class="opt" data-k="${o[1]}">${o[0]}</button>`).join('')}</div>`;
+  requestAnimationFrame(()=>QB.querySelector('.qprog div').style.width=((qi+1)/Q.length*100)+'%');
+  QB.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{tak();score[b.dataset.k]=(score[b.dataset.k]||0)+1;qi++;renderQ()});
+}
+function result(){
+  const k=Object.keys(score).sort((a,b)=>score[b]-score[a])[0],r=R[k];
+  QB.innerHTML=`<div class="result"><div class="emo">${r.e}</div><div class="kicker">AAJ KI HEROINE HAI…</div>
+  <div class="rname">${r.n}</div><div class="rline">${r.l}</div><p>${r.t}</p>
+  <button class="alt" id="again">PLAY AGAIN</button></div>`;
+  ting();dhaa();const b=QB.getBoundingClientRect();confetti(160,b.left+b.width/2,b.top+60);
+  document.getElementById('again').onclick=()=>{qi=0;score={};renderQ()};
+}
+renderQ();
+
+/* ---------- CAKE ---------- */
+const CN=document.getElementById('candles');
+for(let i=0;i<5;i++)CN.insertAdjacentHTML('beforeend','<div class="candle"><div class="flame"></div></div>');
+let lit=true,micStream=null;
+function blowOut(){
+  if(!lit)return;lit=false;
+  document.querySelectorAll('.candle').forEach((c,i)=>setTimeout(()=>{
+    c.querySelector('.flame').classList.add('out');
+    const s=document.createElement('div');s.className='smoke';c.appendChild(s);setTimeout(()=>s.remove(),1500);
+  },i*120));
+  noise(.6,700,.5,0,.5);
+  setTimeout(()=>{
+    confetti(350);ting();dhaa();dhaa(.25);
+    document.getElementById('wishmsg').textContent='Tathaastu! ✨ Your wish has been sent to the universe, heroine!';
+    document.getElementById('blow').textContent='LIGHT AGAIN 🔥';
+  },700);
+  if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;document.getElementById('mic').textContent='🎤 BLOW INTO THE MIC'}
+}
+function relight(){lit=true;document.querySelectorAll('.flame').forEach(f=>f.classList.remove('out'));document.getElementById('wishmsg').textContent='';document.getElementById('blow').textContent='PHOOOO! 🌬️'}
+document.getElementById('blow').onclick=()=>lit?blowOut():relight();
+document.getElementById('mic').onclick=async function(){
+  if(!lit)relight();
+  try{
+    micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    this.textContent='👂 LISTENING… BLOW!';
+    const a=ac(),src=a.createMediaStreamSource(micStream),an=a.createAnalyser();an.fftSize=512;src.connect(an);
+    const buf=new Uint8Array(an.frequencyBinCount);let hits=0;
+    (function check(){
+      if(!micStream)return;an.getByteFrequencyData(buf);
+      let s=0;for(let i=0;i<40;i++)s+=buf[i];
+      hits=s/40>150?hits+1:0;
+      if(hits>8)blowOut();else requestAnimationFrame(check);
+    })();
+  }catch(e){this.textContent='🎤 MIC BLOCKED — USE BUTTON';}
+};
+
+/* ---------- DANCE ---------- */
+const lights=document.getElementById('lights');
+['#ff2e88','#00d1b2','#ffcc33','#b14cff','#ff8c00'].forEach((c,i)=>{
+  const b=document.createElement('div');b.className='beam';b.style.left=(10+i*20)+'%';
+  b.style.background=`linear-gradient(${c},transparent)`;b.style.animationDelay=(-i*.6)+'s';lights.appendChild(b)});
+const moves=['BULB CHANGE KARO 💡','PATANG UDAO 🪁','LUNGI DANCE! 🕺','SHOULDER SHIMMY 💃','HOOK STEP! 🔥','NAAGIN MOVE 🐍','DISCO FINGER ☝️','THUMKA LAGAO ✨'];
+let partyT=null;
+document.getElementById('party').onclick=function(){
+  const S=document.getElementById('dance');
+  if(partyT){clearInterval(partyT);partyT=null;S.classList.remove('party');bpm=110;this.textContent='NACHLE! 🔥';document.getElementById('steps').textContent='ENCORE?';return}
+  ac().resume();startDhol();bpm=150;S.classList.add('party');this.textContent='BAS KARO 😅';
+  const st=document.getElementById('steps');let i=0;
+  const next=()=>{st.textContent=moves[i++%moves.length];confetti(40)};next();
+  partyT=setInterval(next,1800);
+};
+
+/* ---------- TICKET ---------- */
+document.getElementById('tdate').textContent=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+document.getElementById('stub').onclick=function(){
+  if(this.classList.contains('torn'))return;
+  noise(.4,1800,.6,0,.8);this.classList.add('torn');
+  setTimeout(()=>{document.getElementById('admit').textContent='Welcome to the premiere, superstar! 🌟 Scroll for the credits…';confetti(200);ting()},600);
+};
+
+/* ---------- REVEAL + CREDITS ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.6){document.getElementById('roll').classList.add('go');cio.disconnect()}}),{threshold:.6});
+cio.observe(document.getElementById('credits'));
+</script>
+</body>
+</html>
